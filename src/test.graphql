@@ -1,5 +1,6 @@
 query {
-  posts {
-    id
+  human(id: "1001") {
+    name
+    homePlanet
   }
 }

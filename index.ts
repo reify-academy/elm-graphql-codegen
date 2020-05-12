@@ -3,7 +3,7 @@
 // https://github.com/dillonkearns/elm-graphql
 
 import { Types, PluginFunction } from "@graphql-codegen/plugin-helpers";
-import { GraphQLSchema, OperationDefinitionNode } from "graphql";
+import { GraphQLSchema, OperationDefinitionNode, FieldNode } from "graphql";
 import {
   RawTypesConfig,
   AvoidOptionalsConfig,
@@ -28,13 +28,35 @@ export const plugin: PluginFunction<
         const output = `${opDefinition.name} ${
           opDefinition.operation
         } ${JSON.stringify(opDefinition.selectionSet)}`;
+        const querySelectionSet = opDefinition.selectionSet
+          .selections[0] as FieldNode;
+        const selectionSet = querySelectionSet.selectionSet.selections
+          .map((x: FieldNode) => `HumanSchema.${x.name.value}`)
+          .join("\n        ");
         return `
-        selection : SelectionSet Post StarWars.Object.Human
-        selection =
-            SelectionSet.map2 HumanData
-                Human.name
-                Human.homePlanet
-        `;
+import Graphql.Operation exposing (RootQuery)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+import StarWars.Object.Human as HumanSchema
+import StarWars.Query as Query
+import StarWars.Scalar exposing (Id(..))
+ 
+ 
+query : SelectionSet (Maybe HumanData) RootQuery
+query =
+    Query.human { id = Id "1001" } humanSelection
+
+
+type alias HumanData =
+    { name : String
+    , homePlanet : Maybe String
+    }
+
+
+humanSelection : SelectionSet HumanData HumanSchema
+humanSelection =
+    SelectionSet.map2 HumanData
+        ${selectionSet}
+                    `;
       }
       return "Empty file";
     })
