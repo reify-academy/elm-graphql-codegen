@@ -1,0 +1,14 @@
+{
+  "name": "elm-graphql-codegen",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:reify-academy/elm-graphql-codegen.git",
+  "author": "Reify Academy <team@reify.academy>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.5"
+  }
+}
