@@ -1,3 +1,5 @@
+require:
+  - ts-node/register
 schema: my-schema.graphql
 documents: "./src/**/*.graphql"
 generates:
