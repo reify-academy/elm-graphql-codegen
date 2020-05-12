@@ -6,6 +6,7 @@
 - https://github.com/the-sett/salix/
 - https://github.com/lukewestby/elm-template/
 - https://github.com/lukewestby/elm-string-interpolate/
+- https://github.com/dotansimha/graphql-code-generator/tree/master/packages/plugins
 
 ## Salix
 From their README:
